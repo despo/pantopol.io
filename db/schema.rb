@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20130816180257) do
 
   create_table "products", force: true do |t|
     t.integer  "store_id"
+    t.string   "name"
     t.float    "price",      default: 0.0, null: false
     t.date     "date"
     t.string   "unit"

@@ -1,9 +1,10 @@
 <h1>Listing products</h1>
 
-<table>
+<table class="width-100 table-hovered">
   <thead>
     <tr>
       <th>Store</th>
+      <th>Name</th>
       <th>Price</th>
       <th>Date</th>
       <th>Unit</th>
@@ -16,7 +17,8 @@
   <tbody>
     <% @products.each do |product| %>
       <tr>
-        <td><%= product.store %></td>
+        <td><%= product.store.identifier_string %></td>
+        <td><%= product.name %></td>
         <td><%= product.price %></td>
         <td><%= product.date %></td>
         <td><%= product.unit %></td>

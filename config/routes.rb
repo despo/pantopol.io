@@ -1,4 +1,6 @@
 PriceComparison::Application.routes.draw do
+  resources :stores
+
   resources :cities
 
   # The priority is based upon order of creation: first created -> highest priority.

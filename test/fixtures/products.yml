@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  store_id: 
+  price: 
+  date: 2013-08-16
+  unit: MyString
+
+two:
+  store_id: 
+  price: 
+  date: 2013-08-16
+  unit: MyString

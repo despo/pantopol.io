@@ -3,4 +3,7 @@ class Product < ActiveRecord::Base
 
   validates :name, :presence => true
   validates :unit, :presence => true
+  validates :store_id, :presence => true
+
+  validates :name, :uniqueness => {:scope =>  [ :store_id, :date] }
 end

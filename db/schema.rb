@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20130816180257) do
     t.datetime "updated_at"
   end
 
-  add_index "products", ["store_id"], name: "index_products_on_store_id"
+  add_index "products", ["store_id"], name: "index_products_on_store_id", using: :btree
 
   create_table "stores", force: true do |t|
     t.integer  "city_id"
@@ -40,6 +40,6 @@ ActiveRecord::Schema.define(version: 20130816180257) do
     t.datetime "updated_at"
   end
 
-  add_index "stores", ["city_id"], name: "index_stores_on_city_id"
+  add_index "stores", ["city_id"], name: "index_stores_on_city_id", using: :btree
 
 end

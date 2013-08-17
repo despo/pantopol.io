@@ -1,0 +1,39 @@
+<h1>
+  Μέσος όρος τιμών προιόντων ανά επαρχία τους τελευταίους μήνες
+</h1>
+<div class="units-row">
+  <div class="unit-70">
+    <%= column_chart latest_city_average_products_path %>
+  </div>
+  <div class="unit-30">
+    <h2>Most expensive city</h2>
+    <%= latest_most_expensive_city.first %>
+    <%= latest_most_expensive_city.last %>
+    <br/>
+    <small>
+    <%= most_expensive_city.first %>
+    <%= most_expensive_city.last %>
+  </small>
+  </div>
+</div>
+
+<div class="units-row">
+  <div class="unit-40">
+    Κόστος ανά φρουταρία (date)
+    <%= bar_chart latest_prices_by_store_products_path %>
+  </div>
+
+  <div class="unit-60">
+    Συνολικό Κόστος ανά φρουταρία (date)
+    <%= column_chart prices_by_store_products_path %>
+  </div>
+</div>
+
+<div class="units-row">
+  <div class="unit-50">
+    <h2>
+      <%=Product.find(40).name %>
+    </h2>
+    <%= line_chart product_price_graph_path(40) %>
+  </div>
+</div>

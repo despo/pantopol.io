@@ -1,28 +1,16 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
-  # GET /products
-  # GET /products.json
   def index
     @products = Product.all
   end
 
-  # GET /products/1
-  # GET /products/1.json
   def show
   end
 
-  # GET /products/new
-  def new
-    @product = Product.new
-  end
-
-  # GET /products/1/edit
   def edit
   end
 
-  # POST /products
-  # POST /products.json
   def create
     @product = Product.new(product_params)
 
@@ -37,8 +25,6 @@ class ProductsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /products/1
-  # PATCH/PUT /products/1.json
   def update
     respond_to do |format|
       if @product.update(product_params)
@@ -51,8 +37,6 @@ class ProductsController < ApplicationController
     end
   end
 
-  # DELETE /products/1
-  # DELETE /products/1.json
   def destroy
     @product.destroy
     respond_to do |format|
@@ -61,14 +45,48 @@ class ProductsController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
-    end
+  def grouped_by_name
+    render json: Store.joins(:city).group("cities.name").joins(:products).average(:price)
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def product_params
-      params.require(:product).permit(:store_id, :price, :date, :unit)
+  def prices_by_store
+    data = Product.where("price > ?", 0).joins(:store).group("identifier_string").order("average_price").average(:price)
+    render :json => data
+  end
+
+  def latest_prices_by_store
+    data = Product.where("price > ?", 0).where(date: latest_date).joins(:store).group("identifier_string").order("average_price").average(:price)
+    render :json => data
+  end
+
+  def latest_city_average
+    dates =  Product.order("date DESC").pluck(:date).uniq![0..2]
+    data = dates.reverse.map do |date|
+    { :name => date.to_s, :data  => Store.where("products.date =?", date).joins(:city).group("cities.name").joins(:products).order("cities.name").average(:price)}
     end
+    data << { :name => "Total", :data => city_average }
+    render :json => data
+  end
+
+  def price_graph
+    data = Product.where(name: Product.find(params[:product_id]).name).group_by_day(:date).average(:price)
+    render :json => data
+  end
+
+  def city_average
+    Store.joins(:city).group("cities.name").joins(:products).order("cities.name").average(:price)
+  end
+
+  private
+  def latest_date
+    @date ||= Product.order("date DESC").pluck(:date).uniq![0]
+  end
+
+  def set_product
+    @product = Product.find(params[:id])
+  end
+
+  def product_params
+    params.require(:product).permit(:store_id, :price, :date, :unit)
+  end
 end

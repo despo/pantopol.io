@@ -6,6 +6,15 @@ PriceComparison::Application.routes.draw do
     get :latest_prices_by_store, on: :collection
     get :prices_by_store, on: :collection
     get :price_graph
+    get :all_cities_average_price_graph
+    get :all_cities_max_price_graph
+    get :all_cities_min_price_graph
+    get :top_expensive_stores
+    get :top_cheapest_stores
+    get :most_expensive, on: :collection
+    get :cheapest, on: :collection
+    get :city_stores_prices, on: :collection
+    get :all, on: :collection
   end
 
   resources :stores

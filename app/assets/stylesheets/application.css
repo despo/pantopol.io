@@ -11,3 +11,50 @@
  *= require_self
  *= require_tree .
  */
+
+#wrap {
+  margin: 50px  auto;
+  max-width: 1280px;
+  padding: 0 15px;
+}
+
+.note-padding {
+  padding-top: 55px;
+}
+
+text {
+  font: 10px sans-serif;
+}
+
+.bubble-graph {
+}
+
+#bubble-graph {
+  width: 200px;
+}
+
+.cut {
+  font-size: 20px;
+  color: #ccc;
+  margin: 3.3em 0;
+  text-align: center;
+}
+.cloud {
+  text-align: center;
+  height: 500px;
+  width: 1200px;
+}
+
+.cloud svg {
+  position: relative;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+.loading {
+    overflow: hidden;
+    background: rgba( 255, 255, 255, .8 )
+                image-url('ajax-loader.gif')
+                50% 50%
+                no-repeat;
+}

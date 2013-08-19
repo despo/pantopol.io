@@ -35,3 +35,6 @@ end
 gem 'chartkick'
 gem 'groupdate'
 gem 'pg'
+gem 'haml'
+gem 'will_paginate'
+gem "draper"

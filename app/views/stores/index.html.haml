@@ -1,0 +1,30 @@
+.units-row
+  .unit-50
+    %h1.subheader
+      .text-centered
+        = bar_chart prices_by_store_products_path, :library => { :title => "Κόστος ανά φρουταρία" }, :height => "900px"
+
+  .unit-50
+    %table
+      %thead
+        %tr
+          %th City
+          %th Name
+          %th Identifier string
+          %th
+          %th
+          %th
+
+      %tbody
+        - @stores.each do |store|
+          %tr
+            %td= store.city.name
+            %td= store.name
+            %td= store.identifier_string
+            %td= link_to 'Show', store
+            %td= link_to 'Edit', edit_store_path(store)
+            %td= link_to 'Destroy', store, method: :delete, data: { confirm: 'Are you sure?' }
+
+    %br
+
+    = link_to 'New Store', new_store_path

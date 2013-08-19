@@ -1,0 +1,83 @@
+%h1= @product.name
+.units-row.units-split
+  %h2.subheader
+    .text-centered
+      %strong=t("latest_prices")
+  .unit-40
+    = bar_chart latest_top_cheapest_stores(@product), :height => "400px", :library => { :title => t("cheapest_prices"), :colors => [ "green"] }, :height => "300px"
+  .unit-20.note-padding
+    .text-centered
+      %p
+        .label.label-red
+          =number_to_currency(@product.highest_price)
+        %br
+        %strong.color-red=t("highest_price")
+      %p
+        .label.big=number_to_currency(@product.average_price)
+        %br
+        %strong=t("average_price")
+        %br
+      %p
+        .label.label-green=number_to_currency(@product.lowest_price)
+        %br
+        %strong.color-green=t("lowest_price")
+
+  .unit-40
+    = bar_chart latest_top_expensive_stores(@product), :height => "400px", :library => { :title => t("most_expensive_prices"), :colors => [ "#dc3912"] }, :height => "300px"
+
+
+.units-row
+  .unit-50
+    .unit-row-end
+      .unit-100
+        %h2.subheader
+          .text-centered
+            %strong=t("prices_per_city")
+        .unit-row-end
+          .unit-100
+            = line_chart product_all_cities_average_price_graph_path(@product), :height => "400px", :library => { :title => t("average_prices") }, :height => "180px"
+        .unit-row-end
+          .unit-100
+            = line_chart product_all_cities_max_price_graph_path(@product), :height => "400px", :library => { :title => t("most_expensive_prices") }, :height => "180px"
+        .unit-row-end
+          .unit-100
+            = line_chart product_all_cities_min_price_graph_path(@product), :height => "400px", :library => { :title => t("cheapest_prices")}, :height => "180px"
+
+  .unit-50.bubble-graph{ :"data-path" => city_stores_prices_products_path(product_id:@product) }
+    %h2.subheader
+      .text-centered
+        %strong=t("prices_per_store_per_city")
+
+
+.units-row
+  .unit-push-20.unit-80
+    .units-row-end
+      .unit-100
+        %h2.subheader
+          .text-centered
+            %strong=t("prices_per_city")
+    .units-row-end
+      .unit-40
+        .text-centered
+        = bar_chart product_top_cheapest_stores_path(@product), :height => "400px", :library => { :title => t("cheapest_prices"), :colors => [ "green" ] }, :height => "300px"
+      .unit-20.note-padding
+        .text-centered
+          %p
+            .label.label-red
+              =number_to_currency(highest_priced_product.price)
+            %br
+            %strong.color-red=t("highest_price")
+          %p
+            .label.big=number_to_currency((highest_priced_product.price+lowest_priced_product.price)/2)
+            %br
+            %strong=t("average_price")
+            %br
+          %p
+            .label.label-green=number_to_currency(lowest_priced_product.price)
+            %br
+            %strong.color-green=t("lowest_price")
+
+      .unit-40
+        .text-centered
+        = bar_chart product_top_expensive_stores_path(@product), :height => "400px", :library => { :title => t("most_expensive_prices"), :colors => [ "#dc3912"] }, :height => "300px"
+

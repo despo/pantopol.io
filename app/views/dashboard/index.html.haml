@@ -1,0 +1,63 @@
+.units-row
+  .unit-100
+    .cloud{ :"data-path" => all_products_path }
+
+.units-row
+  .unit-80
+    = column_chart latest_city_average_products_path , :library => { :title => t("average_price_per_county") }, :height => "250px"
+  .unit-20.city-average-prices
+    %h2=t("most_expensive_city")
+    .big
+      %strong= latest_most_expensive_city.first
+      .label.label-red= number_to_currency(latest_most_expensive_city.last, precision: 2)
+    %br
+    %small
+      .big
+        %strong= most_expensive_city.first
+        .label.label-red= number_to_currency(most_expensive_city.last, precision: 2)
+    %br
+    %hr
+    %br
+
+    %h2=t("cheapest_city")
+    .big
+      %strong= latest_cheapest_city.first
+      .label.label-green= number_to_currency(latest_cheapest_city.last, precision: 2)
+    %br
+    %small
+      %strong= cheapest_city.first
+      .label.label-green= number_to_currency(cheapest_city.last, precision: 2)
+
+.units-row.units-split
+  .unit-40
+    .units-row-end
+      .unit-push-20.unit-40.city-average-prices
+        %h2=t("most_expensive_store")
+        .big
+          %strong= latest_most_expensive_store.first
+          .label.label-red= number_to_currency(latest_most_expensive_store.last, precision: 2)
+        %br
+        %small
+          .big
+            %strong= most_expensive_store.first
+            .label.label-red= number_to_currency(most_expensive_store.last, precision: 2)
+
+      .unit-push-30.unit-40.city-average-prices
+        %h2=t("cheapest_store")
+        .big
+          %strong= latest_cheapest_store.first
+          .label.label-green= number_to_currency(latest_cheapest_store.last, precision: 2)
+        %br
+        %small
+          %strong= cheapest_store.first
+          .label.label-green= number_to_currency(cheapest_store.last, precision: 2)
+
+%h2.subheader
+  .text-centered
+    %strong=t("prices_per_store_per_city")
+.units-row
+  .unit-50
+    = bar_chart most_expensive_products_path, :height => '500px', :library =>  {:colors => [ "#dc3912"], :title => t("top_most_expensive") }
+  .unit-50
+    = bar_chart cheapest_products_path, :height => '500px', :library => {:colors => [ "green" ], :title => t("top_cheapest") , :"vAxis.direction" => -1 }
+

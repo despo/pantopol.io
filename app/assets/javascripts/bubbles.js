@@ -1,6 +1,5 @@
 $(document).ready(function() {
   $('.bubble-graph').each(function() {
-    $(this).addClass("loading");
     width = $(this).css("width").replace(/[^-\d\.]/g, '');
     var diameter = width,
   format = d3.format(",d"),
@@ -9,7 +8,6 @@ $(document).ready(function() {
     var bubble = d3.layout.pack()
     .sort(null)
     .size([diameter, diameter]);
-
 
   var svg = d3.select(this).append("svg")
     .attr("width", diameter)
@@ -26,6 +24,10 @@ $(document).ready(function() {
 
   node.append("title")
     .text(function(d) { return d.className + ": " + format(d.value); });
+
+  node.append("circle")
+    .attr("r", function(d) { return d.r; })
+    .style("fill", function(d) { return color(d.packageName); });
 
   node.append("text")
     .attr("dy", ".3em")
@@ -70,6 +72,10 @@ $(document).ready(function() {
     .style("font-family", "Impact")
     .style("fill", function(d, i) { return fill(i); })
     .attr("text-anchor", "middle")
+    .attr("data-highest-price", function(d) { return d.highest_price; })
+    .attr("data-highest-price-store", function(d) { return d.highest_price_store; })
+    .attr("data-lowest-price", function(d) { return d.lowest_price; })
+    .attr("data-lowest-price-store", function(d) { return d.lowest_price_store; })
     .attr("data-url", function(d) { return d.url; })
     .attr("transform", function(d) {
       return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
@@ -80,14 +86,15 @@ $(document).ready(function() {
   function start(width, height) {
     var classes = [];
     var current = $('.cloud')
-      console.log(width);
 
     d3.json(current.attr("data-path"), function(error, root) {
 
       function recurse(name, node) {
         var size = node.size;
 
-        if (node.size > 10){
+        if (node.size > 30){
+          size =  20;
+        } else if (node.size > 10){
           size =  10;
         } else if (node.size > 5) {
           size = 8;
@@ -99,7 +106,7 @@ $(document).ready(function() {
 
         if (node.children) node.children.forEach(function(child) { recurse(node.name, child); });
         else  {
-          classes.push({ text: node.text, size: size + 10, url: node.url});
+          classes.push({ text: node.text, size: size + 10, url: node.url, highest_price: node.highest_price, highest_price_store: node.highest_price_store, lowest_price: node.lowest_price, lowest_price_store: node.lowest_price_store});
         }
       }
 
@@ -115,7 +122,6 @@ $(document).ready(function() {
         .on("end", draw)
         .start();
 
-      $(this).removeClass("loading");
 
     });
   }

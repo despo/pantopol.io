@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  include ProductsHelper
+
   before_action :set_product, only: [:show, :edit, :update, :destroy, :top_expensive_stores, :top_cheapest_stores, :city_stores_prices]
 
   def index
@@ -174,9 +176,29 @@ class ProductsController < ApplicationController
   end
 
   def all_products_list
-    Product.select("id, name, price").where("price > ?",0).group('name').average("price").map do |o|
-      { :text => o.first, :size => o.last, :url => url_for(Product.where(:name => o.first).first) }
-    end
+    Product.select("id, name, price").
+      where("price > ?",0).
+      group('name').
+      average("price").map do |product|
+        { :text => product[0],
+          :size => product[1],
+          :url => url_for(product_group(product[0]).first),
+          :highest_price => (product_group(product[0]).order("price desc").first.price rescue 0),
+          :highest_price_store => (product_group(product[0]).order("price desc").first.store.display_name rescue ""),
+          :lowest_price => (product_group(product[0]).order("price asc").first.price rescue 0),
+          :lowest_price_store => (product_group(product[0]).order("price asc").first.store.display_name rescue "")
+        }
+      end
+  end
+
+  def product_group name
+    @product_group = Product.where(:name => name, :date => latest_date).where("price > ?", 0) unless @search.eql? name
+    @search = name
+
+    return @product_group unless @product_group.empty?
+    @product_group = Product.where(:name => name)
+    @product_group.first.price = 0
+    @product_group
   end
 
   def min_price_by_store city

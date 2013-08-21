@@ -1,3 +1,12 @@
+GIT
+  remote: git://github.com/despo/foundation-icons-rails.git
+  revision: 776dbacaa76ac5731e4b810a41fce2dc5e931c1d
+  branch: rails-4
+  specs:
+    foundation-icons-rails (0.0.1.2)
+      rails
+      sass
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -142,6 +151,7 @@ DEPENDENCIES
   chartkick
   coffee-rails (~> 4.0.0)
   draper
+  foundation-icons-rails!
   groupdate
   haml
   jbuilder (~> 1.2)

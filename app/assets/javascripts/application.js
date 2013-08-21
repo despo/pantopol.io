@@ -18,3 +18,7 @@
 //= require d3.layout.cloud
 //= require bubbles
 //= require_tree .
+
+$(document).ready(function(){
+
+});

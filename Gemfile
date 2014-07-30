@@ -40,3 +40,7 @@ gem 'will_paginate'
 gem "draper"
 gem 'foundation-icons-rails', github: 'despo/foundation-icons-rails', :branch => 'rails-4'
 gem 'redis'
+
+group 'production' do
+  gem 'rails_12factor'
+end

@@ -5,9 +5,9 @@ class ImportData
   CITIES = ["ΛΕΥΚΩΣΙΑ", "ΛΕΜΕΣΟΣ", "ΛΑΡΝΑΚΑ", "ΠΑΦΟΣ", "ΑΜΜΟΧΩΣΤΟΣ" ]
 
   def run_spreadsheets
-    Dir.entries('./data/unprocessed').each do |d|
+    Dir.entries("#{Rails.root}/data/unprocessed").each do |d|
       unless d == "." or d == ".."
-      s = Spreadsheet.open("./data/unprocessed/#{d}")
+      s = Spreadsheet.open("#{Rails.root}/data/unprocessed/#{d}")
       @spreadsheet = s
       run s
       end

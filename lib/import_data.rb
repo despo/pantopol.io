@@ -14,14 +14,14 @@ class ImportData
     end
   end
 
-  def run spreadsheet
-    @sheet = spreadsheet.worksheet CITIES.first
+  def run(spreadsheet)
+    @sheet = spreadsheet.worksheet(CITIES.first)
     @names = []
     @units = []
     setup_cities
 
     @cities.each do |city|
-      load_city_data city
+      load_city_data(city)
     end
   end
 
@@ -35,8 +35,8 @@ class ImportData
     sheet = @spreadsheet.worksheet city.name
 
     name = nil
-    date =  sheet.row(4)[4]
-    unit =  sheet.row(10)[4]
+    date = sheet.row(4)[4]
+    unit = sheet.row(10)[4]
 
     stores = sheet.row(6)[5..sheet.row(6).size].map do |s|
       unless s.nil? or s.eql? "Μέσος Όρος Τιμής Ανά Προϊόν"
@@ -44,14 +44,13 @@ class ImportData
       end
     end
 
-
     sheet.each_with_index 3 do |row, index|
       row[3..row.size].each_with_index do |c, i|
 
         if i < 2
           unit = !c.eql?("\"") ? c : unit if i == 1
 
-          if @sheet.eql? sheet and i == 0
+          if @sheet.eql?(sheet) and i == 0
             name = "#{c.nil? ? nil : c}"
             @names << name unless name.eql? "Κατηγορία / Είδος" or name.eql? "ΛΑΧΑΝΙΚΑ" or name.eql? "Όνομα Φρουταρίας"
           else

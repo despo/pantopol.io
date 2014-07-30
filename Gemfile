@@ -12,6 +12,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'therubyracer'
+gem "sprockets", "2.11.0"
 
 group :doc do
   gem 'sdoc', require: false

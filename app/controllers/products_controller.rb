@@ -176,7 +176,10 @@ class ProductsController < ApplicationController
   end
 
   def all_products_list
-    Product.select("id, name, price").
+    key = "all_products_list_#{latest_date}"
+    return $redis.get(key) if $redis.keys.include? key
+
+    all_results = Product.select("id, name, price").
       where("price > ?",0).
       group('name').
       average("price").map do |product|
@@ -189,6 +192,7 @@ class ProductsController < ApplicationController
           :lowest_price_store => (product_group(product[0]).order("price asc").first.store.display_name rescue "")
         }
       end
+      $redis.set(key, all_results)
   end
 
   def product_group name

@@ -39,3 +39,4 @@ gem 'haml'
 gem 'will_paginate'
 gem "draper"
 gem 'foundation-icons-rails', github: 'despo/foundation-icons-rails', :branch => 'rails-4'
+gem 'redis'

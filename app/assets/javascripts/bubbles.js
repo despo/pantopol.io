@@ -121,8 +121,6 @@ $(document).ready(function() {
         .fontSize(function(d) { return d.size; })
         .on("end", draw)
         .start();
-
-
     });
   }
 

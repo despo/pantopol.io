@@ -12,13 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require chartkick
 //= require d3.v3.min
 //= require d3.layout.cloud
 //= require bubbles
 //= require_tree .
-
-$(document).ready(function(){
-
-});

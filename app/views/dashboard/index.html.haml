@@ -1,73 +1,68 @@
-.units-row#selected_product
-  .unit-50
-    .highest-price.color-red
-    .lowest-price.color-green
+-#.row
+  -#.large-12.columns.cloud{ :"data-path" => all_products_path }
 
-  .unit-50
-    .unit-row-end
-      .unit-80
-        .text-right.name
-
-.unit-row
-  .unit-1oo
-    .cloud{ :"data-path" => all_products_path }
-
-.units-row
-  .unit-80
+.row
+  .large-12.columns
     = column_chart latest_city_average_products_path , :library => { :title => t("average_price_per_county") }, :height => "250px"
-  .unit-20.city-average-prices
-    %h2=t("most_expensive_city")
-    .big
-      %strong= latest_most_expensive_city.first
-      .label.label-red= number_to_currency(latest_most_expensive_city.last, precision: 2)
+.row
+  .large-6.columns
+    .row
+      .large-12.columns
+        %h3 Πάντα
+    .row
+      .large-6.columns
+        .box
+          .content
+            .highlight= number_to_currency(latest_most_expensive_city.last, precision: 2)
+            .note= latest_most_expensive_city.first
+          .description Ακριβότερη πόλη
+      .large-6.columns
+        .box#cheap
+          .content
+            .highlight= number_to_currency(latest_cheapest_city.last, precision: 2)
+            .note= latest_cheapest_city.first
+          .description=t("cheapest_city")
+  .large-6.columns
+    .row
+      .large-12.columns
+        %h3 Αυτό το μήνα
+    .row
+      .large-6.columns
+        .box#pricier
+          .content
+            .highlight= number_to_currency(most_expensive_city.last, precision: 2)
+            .note= most_expensive_city.first
+          .description Ακριβότερη πόλη
+      .large-6.columns
+        .box#cheapest
+          .content
+            .highlight= number_to_currency(cheapest_city.last, precision: 2)
+            .note= cheapest_city.first
+          .description=t("cheapest_city")
+
+.row
+  .large-12.columns
+    = column_chart min_and_max_products_path, stacked: true, :height => '500px', :library =>  {:colors => [ "#dc3912", "#39B54D"], :title => "ακριβότερα και φθηνότερα προιόντα στην αγορά" }
     %br
-    %small
-      .big
-        %strong= most_expensive_city.first
-        .label.label-red= number_to_currency(most_expensive_city.last, precision: 2)
-    %br
-    %hr
-    %br
-
-    %h2=t("cheapest_city")
-    .big
-      %strong= latest_cheapest_city.first
-      .label.label-green= number_to_currency(latest_cheapest_city.last, precision: 2)
-    %br
-    %small
-      %strong= cheapest_city.first
-      .label.label-green= number_to_currency(cheapest_city.last, precision: 2)
-
-.units-row.units-split
-  .unit-40
-    .units-row-end
-      .unit-push-20.unit-40.city-average-prices
-        %h2=t("most_expensive_store")
-        .big
-          %strong= latest_most_expensive_store.first
-          .label.label-red= number_to_currency(latest_most_expensive_store.last, precision: 2)
-        %br
-        %small
-          .big
-            %strong= most_expensive_store.first
-            .label.label-red= number_to_currency(most_expensive_store.last, precision: 2)
-
-      .unit-push-30.unit-40.city-average-prices
-        %h2=t("cheapest_store")
-        .big
-          %strong= latest_cheapest_store.first
-          .label.label-green= number_to_currency(latest_cheapest_store.last, precision: 2)
-        %br
-        %small
-          %strong= cheapest_store.first
-          .label.label-green= number_to_currency(cheapest_store.last, precision: 2)
-
-%h2.subheader
-  .text-centered
-    %strong=t("prices_per_store_per_city")
-.units-row
-  .unit-50
-    = bar_chart most_expensive_products_path, :height => '500px', :library =>  {:colors => [ "#dc3912"], :title => t("top_most_expensive") }
-  .unit-50
-    = bar_chart cheapest_products_path, :height => '500px', :library => {:colors => [ "green" ], :title => t("top_cheapest") , :"vAxis.direction" => -1 }
-
+.row
+  .large-6.columns
+    .box
+      .content
+        .highlight= number_to_currency(latest_most_expensive_store.last, precision: 2)
+      .description= latest_most_expensive_store.first
+  .large-6.columns
+    .box
+      .content
+        .highlight= number_to_currency(most_expensive_store.last, precision: 2)
+      .description= most_expensive_store.first
+.row
+  .large-6.columns
+    .box#cheap
+      .content
+        .highlight= number_to_currency(latest_cheapest_store.last, precision: 2)
+      .description= latest_cheapest_store.first
+  .large-6.columns
+    .box#cheap
+      .content
+        .highlight= number_to_currency(cheapest_store.last, precision: 2)
+      .description= cheapest_store.first

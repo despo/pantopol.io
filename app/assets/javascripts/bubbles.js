@@ -104,7 +104,8 @@ $(document).ready(function() {
           size = 3;
         }
 
-        if (node.children) node.children.forEach(function(child) { recurse(node.name, child); });
+        if (node.children)
+          $.each(node.children, function(index, child) { recurse(node.name, child); });
         else  {
           classes.push({ text: node.text, size: size + 10, url: node.url, highest_price: node.highest_price, highest_price_store: node.highest_price_store, lowest_price: node.lowest_price, lowest_price_store: node.lowest_price_store});
         }

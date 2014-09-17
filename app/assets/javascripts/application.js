@@ -15,5 +15,8 @@
 //= require chartkick
 //= require d3.v3.min
 //= require d3.layout.cloud
+//= require foundation
 //= require bubbles
 //= require_tree .
+
+$(function(){ $(document).foundation(); });

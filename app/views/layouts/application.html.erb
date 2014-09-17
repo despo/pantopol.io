@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>PriceComparison</title>
+    <title>Pantopol.io</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href='http://fonts.googleapis.com/css?family=GFS+Neohellenic:400,700,400italic,700italic&subset=greek' rel='stylesheet' type='text/css'>
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
@@ -10,8 +13,15 @@
   <body>
 
     <div id="wrap">
-      <div class="units-container">
+      <header>
+      <div id='logo'>ΠΑΝΤΟΠΩΛΕΙΟ</div>
+
+      </header>
+      <div class="row">
+      <div class="large12 columns">
         <%= yield %>
+        <%= javascript_include_tag "vendor/modernizr" %>
+      </div>
       </div>
     </div>
   </body>

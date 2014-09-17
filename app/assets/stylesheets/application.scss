@@ -1,23 +1,11 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the top of the
- * compiled file, but it's generally better to create a new file per style scope.
- *
  *= require_self
+ *= require foundation_and_overrides
  *= require foundation-icons
  *= require_tree .
  */
 
-#wrap {
-  margin: 50px  auto;
-  max-width: 1280px;
-  padding: 0 15px;
-}
+@import "foundation_and_overrides";
 
 .note-padding {
   padding-top: 55px;
@@ -58,4 +46,44 @@ text {
                 image-url('ajax-loader.gif')
                 50% 50%
                 no-repeat;
+}
+
+.box {
+  .content {
+    background-color: rgba(215,12,7,0.4);
+    padding: 10px;
+    text-align: center;
+    .highlight {
+      font-size: 2.5em;
+    }
+    .note {
+      padding-top: 5px;
+      font-weight: bold;
+    }
+  }
+  .description {
+    margin-top: 5px;
+    padding: 10px 0px;
+    background-color: #eee;
+    padding: 5px;
+    font-size: 0.8em;
+  }
+
+  &#pricier {
+    .content {
+      background-color: rgba(215,12,7,0.4);
+    }
+  }
+
+  &#cheap {
+    .content {
+      background-color: rgba(57, 181,77, 0.8);
+    }
+  }
+
+  &#cheapest {
+    .content {
+      background-color: rgba(57, 181,77, 0.8);
+    }
+  }
 }

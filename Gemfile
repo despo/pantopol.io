@@ -5,14 +5,12 @@ ruby '2.1.2'
 gem 'rails', '4.1.4'
 gem 'sass-rails', '~> 4.0.1'
 gem 'uglifier'
-gem 'kube-rails'
 gem 'coffee-rails', '~> 4.0.1'
 gem 'spreadsheet'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
-gem 'therubyracer'
-gem "sprockets", "2.11.0"
+gem 'foundation-rails'
 
 group :doc do
   gem 'sdoc', require: false

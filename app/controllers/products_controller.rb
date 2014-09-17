@@ -66,16 +66,16 @@ class ProductsController < ApplicationController
     render :json => data
   end
 
-  def most_expensive
-    data = Product.select("name, price").where("date = ?", latest_date).where("price > ?", 0).group("name, price").order("price DESC").limit(50).map.inject({}) { |hash, p| hash[p.name] = p.price unless hash[p.name] and hash[p.name] > p.price; hash }
-    render :json => data
-  end
+  def min_and_max
+    expensive = Product.select("name, price").where("date = ?", latest_date).where("price > ?", 0).group("name, price").order("price DESC").limit(50).map.inject({}) { |hash, p| hash[p.name] = p.price unless hash[p.name] and hash[p.name] > p.price; hash }
 
-  def cheapest
-    data = Product.select("name, price").where("date = ?", latest_date).where("price > ?", 0).group("name, price").order("price ASC").limit(50).reverse.map.inject({}) do |hash, p|
+    cheap = Product.select("name, price").where("date = ?", latest_date).where("price > ?", 0).group("name, price").order("price ASC").limit(50).reverse.map.inject({}) do |hash, p|
       hash[p.name] = p.price unless hash[p.name] and hash[p.name] > p.price
       hash
     end
+
+    data = [{ name: "Priciest", data: expensive},
+            { name: "Cheapest", data: cheap }]
     render :json => data
   end
 
@@ -135,9 +135,9 @@ class ProductsController < ApplicationController
   def city_stores_prices
     data = { name: "flare",
              children: [{
-              name: "city_prices",
-              children: flare_data
-            }]}
+      name: "city_prices",
+      children: flare_data
+    }]}
 
     render json: data
   end
@@ -177,7 +177,11 @@ class ProductsController < ApplicationController
 
   def all_products_list
     key = "all_products_list_#{latest_date}"
-    return $redis.get(key) if $redis.keys.include? key
+
+    if $redis.keys.include? key
+      data =  $redis.get(key)
+      return JSON.parse(data)
+    end
 
     all_results = Product.select("id, name, price").
       where("price > ?",0).
@@ -192,7 +196,8 @@ class ProductsController < ApplicationController
           :lowest_price_store => (product_group(product[0]).order("price asc").first.store.display_name rescue "")
         }
       end
-      $redis.set(key, all_results)
+      $redis.set(key, all_results.to_json)
+      all_results.to_json
   end
 
   def product_group name
